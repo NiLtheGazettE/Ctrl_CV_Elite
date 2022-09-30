@@ -9,7 +9,8 @@ rule "Remove Not Matched Name Transactions"
 	auto-focus true
 	
 	when
-		not Transactions($id : id, ame matches "Equity|expenses");		
+		$transactions : Transactions($id : id);
+		not Transactions($id == id, name matches "Equity|expenses");		
 	then
 		retract($transactions);
 end
@@ -32,7 +33,8 @@ rule "Remove amount1 < 0 Transactions"
 	auto-focus true
 	
 	when
-		exists Transactions($id : id, amount1 < 0);		
+		$transactions : Transactions($id : id);
+		exists Transactions($id == id, amount1 < 0);		
 	then
 		retract($transactions);
 end
