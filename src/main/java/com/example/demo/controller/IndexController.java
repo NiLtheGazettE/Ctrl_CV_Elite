@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.example.demo.bean.Transactions;
 import com.example.demo.service.ImportService;
+
 
 
 @RestController
@@ -41,7 +41,7 @@ public class IndexController {
 		return map;
 	}
 	
-    @PostMapping(value = "/upload")
+    @PostMapping(value = "/transfor")
     @ResponseBody
     public String uploadExcel(HttpServletRequest request) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -60,7 +60,7 @@ public class IndexController {
             System.out.println(lo);
 
         }
-        return "Transfer Successful";
+        return "Transfor Successful";
     }
 
 }
