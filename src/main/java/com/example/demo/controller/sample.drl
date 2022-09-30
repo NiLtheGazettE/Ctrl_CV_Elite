@@ -1,0 +1,39 @@
+package com.example.demo.controller;
+
+import com.example.demo.bean.Transactions;
+
+global ArrayList arrOfCheckTrans;
+
+rule "Remove Not Matched Name Transactions"
+
+	salience 1000
+	auto-focus true
+	
+	when
+		not Transactions($id : id, ame matches "Equity|expenses");		
+	then
+		retract($transactions);
+end
+
+rule "Remove No Type Transactions"
+
+	salience 1000
+	auto-focus true
+	
+	when
+		$transactions : Transactions($id : id);
+		eval($transactions.getType() == null );	
+	then
+		retract($transactions);
+end
+
+rule "Remove mount1 < 0 Transactions"
+
+	salience 1000
+	auto-focus true
+	
+	when
+		exists Transactions($id : id, mount1 < 0);		
+	then
+		retract($transactions);
+end

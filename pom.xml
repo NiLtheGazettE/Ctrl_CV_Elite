@@ -40,6 +40,31 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.13</version>
 		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<version>7.55.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-internal</artifactId>
+			<version>7.55.0.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.kie.soup/kie-soup-project-datamodel-api -->
+		<dependency>
+			<groupId>org.kie.soup</groupId>
+			<artifactId>kie-soup-project-datamodel-api</artifactId>
+			<version>7.55.0.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.drools/drools-compiler -->
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+			<version>7.55.0.Final</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

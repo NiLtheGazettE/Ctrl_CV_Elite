@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Transactions {
 	private int id;
-	private String accountName;
-	private String accountType;
+	private String name;
+	private String type;
 	private int amount;
 	private int amount1;
 	private int amount2;
@@ -24,19 +24,19 @@ public class Transactions {
 		this.id = id;
 	}
 
-	public String getAccountName() {
-		return accountName;
+	public String getName() {
+		return name;
 	}
 
-	public void setAccountName(String accountName) {
-		this.accountName = accountName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getAccountType() {
-		return accountType;
+	public String getType() {
+		return type;
 	}
 
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	public int getAmount() {

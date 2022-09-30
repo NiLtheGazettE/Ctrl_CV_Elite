@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.example.demo.bean.Transactions;
 import com.example.demo.service.ImportService;
 
 
@@ -39,12 +40,18 @@ public class IndexController {
 		return map;
 	}
 	
+	@RequestMapping(value = "/getTrans")
+	public List<Transactions> getTrans(@RequestParam String name) {
+		List<Transactions> trans = importService.initData();
+		return trans;
+	}
+	
     @PostMapping(value = "/transfor")
     @ResponseBody
     public String uploadExcel(HttpServletRequest request) throws Exception {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
-        MultipartFile file = multipartRequest.getFile("filename");
+        MultipartFile file = multipartRequest.getFile("D:\\Users\\Zhan\\git\\Ctrl_CV_Elite\\demo_data.xlsx");
         if (file.isEmpty()) {
             return "File can't be null";
         }
