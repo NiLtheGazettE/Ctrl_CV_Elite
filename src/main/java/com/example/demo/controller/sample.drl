@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.bean.Transactions;
 
-global ArrayList arrOfCheckTrans;
 
 rule "Remove Not Matched Name Transactions"
 
@@ -17,7 +16,7 @@ end
 
 rule "Remove No Type Transactions"
 
-	salience 1000
+	salience 900
 	auto-focus true
 	
 	when
@@ -27,13 +26,26 @@ rule "Remove No Type Transactions"
 		retract($transactions);
 end
 
-rule "Remove mount1 < 0 Transactions"
+rule "Remove amount1 < 0 Transactions"
 
-	salience 1000
+	salience 800
 	auto-focus true
 	
 	when
-		exists Transactions($id : id, mount1 < 0);		
+		exists Transactions($id : id, amount1 < 0);		
 	then
 		retract($transactions);
+end
+
+rule "Sum amount"
+
+	salience 600
+	auto-focus true
+	
+	when
+		$transactions : Transactions($id : id);		
+	then
+		modify($transactions){
+			setAmount($transactions.getAmount1() + $transactions.getAmount2() + $transactions.getAmount3());
+		}
 end
