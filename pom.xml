@@ -63,7 +63,30 @@
 			<artifactId>drools-compiler</artifactId>
 			<version>7.55.0.Final</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.drools/drools-mvel -->
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-mvel</artifactId>
+			<version>7.55.0.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mvel/mvel2 -->
+		<dependency>
+			<groupId>org.mvel</groupId>
+			<artifactId>mvel2</artifactId>
+			<version>2.4.12.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.63.Final</version>
+		</dependency>
 
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>0.9</version>
+		</dependency>
 
 	</dependencies>
 

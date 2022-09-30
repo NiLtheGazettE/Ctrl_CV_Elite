@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.example.demo.bean.Transactions;
 import com.example.demo.service.ImportService;
 
+import net.sf.json.JSONArray;
+
 
 
 @RestController
@@ -41,10 +43,38 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value = "/getTrans")
-	public List<Transactions> getTrans(@RequestParam String name) {
-		List<Transactions> trans = importService.initData();
-		return trans;
+	public String getTrans(@RequestParam String name) {
+		List<Transactions> trans = importService.loadRules();
+		//List<Transactions> trans = importService.initData();
+		if (trans != null )
+		{
+			JSONArray js = JSONArray.fromObject(trans);
+			String  result  =  js.toString();
+			return result;
+		}
+		else
+		{
+			return null;
+		}
+
 	}
+	
+	@RequestMapping(value = "/getInitData")
+	public String getIInitData(@RequestParam String name) {
+		List<Transactions> trans = importService.initData();
+		if (trans != null )
+		{
+			JSONArray js = JSONArray.fromObject(trans);
+			String  result  =  js.toString();
+			return result;
+		}
+		else
+		{
+			return null;
+		}
+
+	}
+	
 	
     @PostMapping(value = "/transfor")
     @ResponseBody
@@ -67,5 +97,47 @@ public class IndexController {
         }
         return "Transfor Successful";
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	@RequestMapping(value = "/getTran")
+	public String getTran(@RequestParam String name) {
+		List<Transactions> trans = importService.loadRule();
+		//List<Transactions> trans = importService.initData();
+		if (trans != null )
+		{
+			JSONArray js = JSONArray.fromObject(trans);
+			String  result  =  js.toString();
+			return result;
+		}
+		else
+		{
+			return null;
+		}
+
+	}
 
 }

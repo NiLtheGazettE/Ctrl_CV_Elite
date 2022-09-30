@@ -83,7 +83,7 @@ public class ImportServiceImp implements ImportService {
 		return workbook;
 	}
 
-	public void rules() {
+	public List<Transactions> loadRules() {
 		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 		knowledgeBuilder.add(ResourceFactory.newClassPathResource("com/example/demo/controller/sample.drl"),
 				ResourceType.DRL);
@@ -94,7 +94,7 @@ public class ImportServiceImp implements ImportService {
 				System.out.println(error);
 			}
 
-			return;
+			return null;
 		}
 
 		KieBase kieBase = knowledgeBuilder.newKieBase();
@@ -104,27 +104,31 @@ public class ImportServiceImp implements ImportService {
 		System.out.println(
 				" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n^^^^^^^^^^^^^^\n^^^^^^^^^^^ controller.drl  was read - ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n^^^^^^^^^^^^^^\n^^^^^^^^^^^ ");
 
-		kieSession.setGlobal("me", this);
-		kieSession.setGlobal("arrOfCheckTrans", new ArrayList());
+		// kieSession.setGlobal("me", this);
+		// kieSession.setGlobal("arrOfCheckTrans", new ArrayList());
 		System.out.println(
 				" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n^^^^^^^^^^^^^^\n^^^^^^^^^^^   drl was read - ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n^^^^^^^^^^^^^^\n^^^^^^^^^^^ ");
-		
-		List<Transactions> lists = initData();
-		if ( lists != null){
 
-			for (Iterator<Transactions> i = lists.iterator(); i.hasNext();)
-			{
+		List<Transactions> lists = initData();
+		if (lists != null) {
+
+			for (Iterator<Transactions> i = lists.iterator(); i.hasNext();) {
 				Transactions tran = i.next();
-				FactHandle factHandle = kieSession.getFactHandle(tran);
-		        if (factHandle == null) {
-		            kieSession.insert(tran);
-		        } else  {
-		            kieSession.update(factHandle, tran);
-		        }
+				synchronized (kieSession) {
+					FactHandle factHandle = kieSession.getFactHandle(tran);
+					if (factHandle == null) {
+						kieSession.insert(tran);
+						System.out.println("insert 1 data into drools");
+					} else {
+						kieSession.update(factHandle, tran);
+					}
+				}
 			}
 		}
-		
+
 		kieSession.fireAllRules();
+
+		return lists;
 
 	}
 
@@ -157,48 +161,109 @@ public class ImportServiceImp implements ImportService {
 	}
 
 	public List<Transactions> initData() {
+		ArrayList<Transactions> lists = new ArrayList<Transactions>();
 		Transactions tran = new Transactions();
 		tran.setId(1);
 		tran.setName("Equity");
 		tran.setType("Equity");
 		tran.setAmount(0);
-		tran.setAmount1(25623);
-		tran.setAmount2(5484);
-		tran.setAmount3(252636);
+		tran.setAmount1(81);
+		tran.setAmount2(64);
+		tran.setAmount3(47);
 		tran.setIsArchived("N");
 		tran.setInsertedBy("user1");
-		tran.setInsertedAt(new Date());
+		// tran.setInsertedAt(new Date());
 		tran.setUpdatedBy("user2");
-		tran.setUpdatedAt(new Date());
-		List<Transactions> lists = null;
+		// tran.setUpdatedAt(new Date());
 		lists.add(tran);
 
 		Transactions tran1 = new Transactions();
-		Transactions tran2 = new Transactions();
-		Transactions tran3 = new Transactions();
-		Transactions tran4 = new Transactions();
-		Transactions tran5 = new Transactions();
-		Transactions tran6 = new Transactions();
-		Transactions tran7 = new Transactions();
-		Transactions tran8 = new Transactions();
-		Transactions tran9 = new Transactions();
+		tran1.setId(2);
+		tran1.setName("Removed");
+		tran1.setType("Equity");
+		tran1.setAmount(0);
+		tran1.setAmount1(92);
+		tran1.setAmount2(17);
+		tran1.setAmount3(84);
+		tran1.setIsArchived("N");
+		tran1.setInsertedBy("user1");
+		tran1.setUpdatedBy("user2");
 		lists.add(tran1);
-		tran1.setName(null);
-
+		Transactions tran2 = new Transactions();
+		tran2.setId(3);
+		tran2.setName("Equity");
+		tran2.setType(null);
+		tran2.setAmount(0);
+		tran2.setAmount1(78);
+		tran2.setAmount2(90);
+		tran2.setAmount3(4);
+		tran2.setIsArchived("N");
+		tran2.setInsertedBy("user1");
+		tran2.setUpdatedBy("user2");
 		lists.add(tran2);
-		tran2.setAmount1(0);
 
+		Transactions tran3 = new Transactions();
+		tran3.setId(4);
+		tran3.setName("Equity");
+		tran3.setType("Equity");
+		tran3.setAmount(0);
+		tran3.setAmount1(0);
+		tran3.setAmount2(73);
+		tran3.setAmount3(32);
+		tran3.setIsArchived("N");
+		tran3.setInsertedBy("user1");
+		tran3.setUpdatedBy("user2");
 		lists.add(tran3);
-		tran3.setIsArchived("Y");
-		lists.add(tran4);
-		lists.add(tran5);
 
-		lists.add(tran6);
-		lists.add(tran7);
-		lists.add(tran8);
-		lists.add(tran9);
+		Transactions tran4 = new Transactions();
+		tran4.setId(5);
+		tran4.setName("Equity");
+		tran4.setType("Equity");
+		tran4.setAmount(0);
+		tran4.setAmount1(59);
+		tran4.setAmount2(78);
+		tran4.setAmount3(27);
+		tran4.setIsArchived("Y");
+		tran4.setInsertedBy("user1");
+		tran4.setUpdatedBy("user2");
+		lists.add(tran4);
 
 		return lists;
+	}
+
+	public List<Transactions> loadRule() {
+		ArrayList<Transactions> results = new ArrayList<Transactions>();
+		Transactions tran = new Transactions();
+		tran.setId(1);
+		tran.setName("Equity");
+		tran.setType("Equity");
+		tran.setAmount(0);
+		tran.setAmount1(81);
+		tran.setAmount2(64);
+		tran.setAmount3(47);
+		tran.setIsArchived("N");
+		tran.setInsertedBy("user1");
+		// tran.setInsertedAt(new Date());
+		tran.setUpdatedBy("user2");
+		// tran.setUpdatedAt(new Date());
+		tran.setAmount(tran.getAmount1() + tran.getAmount2() + tran.getAmount3());
+		results.add(tran);
+
+		Transactions tran4 = new Transactions();
+		tran4.setId(5);
+		tran4.setName("Equity");
+		tran4.setType("Equity");
+		tran4.setAmount(0);
+		tran4.setAmount1(59);
+		tran4.setAmount2(78);
+		tran4.setAmount3(27);
+		tran4.setIsArchived("Y");
+		tran4.setInsertedBy("user1");
+		tran4.setUpdatedBy("user2");
+
+		tran4.setAmount(tran4.getAmount1() + tran4.getAmount2() + tran4.getAmount3());
+		results.add(tran4);
+		return results;
 	}
 
 }
